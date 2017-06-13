@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="ContosoUniversityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="ContosoUniversityModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ContosoUniversityModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ContosoUniversityModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="ContosoUniversityModel.Course" />
+          <EntitySet Name="Enrollments" EntityType="ContosoUniversityModel.Enrollment" />
+          <EntitySet Name="Students" EntityType="ContosoUniversityModel.Student" />
+          <AssociationSet Name="CourseEnrollment" Association="ContosoUniversityModel.CourseEnrollment">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="StudentEnrollment" Association="ContosoUniversityModel.StudentEnrollment">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Credits" Type="String" Nullable="false" />
+          <NavigationProperty Name="Enrollments" Relationship="ContosoUniversityModel.CourseEnrollment" FromRole="Course" ToRole="Enrollment" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="String" Nullable="false" />
+          <Property Name="StudentID" Type="String" Nullable="false" />
+          <Property Name="Grade" Type="String" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="ContosoUniversityModel.CourseEnrollment" FromRole="Enrollment" ToRole="Course" />
+          <NavigationProperty Name="Student" Relationship="ContosoUniversityModel.StudentEnrollment" FromRole="Enrollment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="FirstMidName" Type="String" Nullable="false" />
+          <Property Name="EnrollmentDate" Type="String" Nullable="false" />
+          <NavigationProperty Name="Enrollments" Relationship="ContosoUniversityModel.StudentEnrollment" FromRole="Student" ToRole="Enrollment" />
+        </EntityType>
+        <Association Name="CourseEnrollment">
+          <End Type="ContosoUniversityModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="ContosoUniversityModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+        </Association>
+        <Association Name="StudentEnrollment">
+          <End Type="ContosoUniversityModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="ContosoUniversityModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ContosoUniversityModel" />
+        <Alias Key="Target" Value="ContosoUniversityModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="ContosoUniversityModelContainer" StorageEntityContainer="ContosoUniversityModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
